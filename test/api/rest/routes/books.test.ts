@@ -1,6 +1,7 @@
-import { SuperTest, Test } from "supertest";
-import { createRequest } from "../../../createRequest";
 import "../../../fixture";
+
+import { SuperTest, Test } from "supertest";
+import { createExpressRequest } from "../../../createRequest";
 
 const AUTHORIZATION = { authorization: `Bearer ${process.env.API_TOKEN}` };
 
@@ -8,7 +9,7 @@ describe("/books", () => {
   let request: () => SuperTest<Test>;
 
   beforeAll(async () => {
-    request = await createRequest();
+    request = await createExpressRequest();
   });
 
   describe("400 - Bad Request", () => {
