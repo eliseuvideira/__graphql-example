@@ -1,15 +1,12 @@
 import { IResolvers } from "@graphql-tools/utils";
 import fs from "fs";
 import path from "path";
-import { loggable } from "../functions/loggable";
 
 const resolvers: IResolvers[] = [];
 
 const resolversDir = path.join(__dirname, "..", "api", "graphql", "resolvers");
 
 const resolversFolders = fs.readdirSync(resolversDir);
-
-const DEBUG = !!+(process.env.DEBUG_GRAPHQL || 0);
 
 for (const folder of resolversFolders) {
   const currentDir = path.join(resolversDir, folder);
@@ -27,7 +24,7 @@ for (const folder of resolversFolders) {
 
     for (const key of Object.keys(module)) {
       resolvers.push({
-        [type]: { [field]: DEBUG ? loggable(module[key]) : module[key] },
+        [type]: { [field]: module[key] },
       });
     }
   }
