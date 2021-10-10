@@ -1,13 +1,15 @@
 import express from "express";
 import cors from "cors";
-import { apollo } from "./apollo";
 import { exception, notFound } from "@ev-fns/errors";
 import fs from "fs";
 import { join } from "path";
 import { json } from "body-parser";
 import { morgan } from "../api/rest/middlewares/morgan";
 
-export const middlewares = async (app: express.Express) => {
+export const middlewares = async (
+  app: express.Express,
+  middlewares: express.RequestHandler[] = [],
+) => {
   app.use(cors());
   app.use(json());
   app.use(morgan());
@@ -16,7 +18,9 @@ export const middlewares = async (app: express.Express) => {
     app.get("/", (_, res) => res.redirect("/graphql"));
   }
 
-  app.use(apollo.middleware());
+  for (const middleware of middlewares) {
+    app.use(middleware);
+  }
 
   const routesDir = join(__dirname, "..", "api", "rest", "routes");
 

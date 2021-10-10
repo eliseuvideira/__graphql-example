@@ -1,10 +1,16 @@
-import "../fixture";
-
-import { request } from "../request";
+import { SuperTest, Test } from "supertest";
+import { createRequest } from "../../../createRequest";
+import "../../../fixture";
 
 const AUTHORIZATION = { authorization: `Bearer ${process.env.API_TOKEN}` };
 
 describe("/books", () => {
+  let request: () => SuperTest<Test>;
+
+  beforeAll(async () => {
+    request = await createRequest();
+  });
+
   describe("400 - Bad Request", () => {
     test("POST /books", async () => {
       expect.assertions(1);

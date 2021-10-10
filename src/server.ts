@@ -15,7 +15,7 @@ server({
   before: async () => {
     await apollo.start();
 
-    await middlewares(app);
+    await middlewares(app, [apollo.middleware()]);
   },
   after: async () => {
     console.info(`🚀 http://localhost:${PORT}`);
