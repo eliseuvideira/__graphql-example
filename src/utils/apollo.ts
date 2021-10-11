@@ -8,5 +8,5 @@ export const apollo = createApollo<Context>({
   typeDefs,
   resolvers,
   context,
-  plugins: +(process.env.DEBUG_GRAPHQL || 0) ? [logging] : undefined,
+  plugins: +(process.env.DEBUG_GRAPHQL || 0) ? [logging()] : undefined,
 });
